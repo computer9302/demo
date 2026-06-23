@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.PostMapper">
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*)
+        FROM post
+    </select>
+
+    <select id="findAllpaged" resultType="Post">
+        SELECT
+            p.post_id,
+            p.member_id,
+            p.title,
+            p.content,
+            p.created_at,
+            m.name AS writer_name
+        FROM post p
+        JOIN member m ON p.member_id = m.member_id
+        ORDER BY p.post_id DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+</mapper>

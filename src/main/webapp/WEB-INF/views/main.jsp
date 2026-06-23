@@ -9,4 +9,6 @@
     <button type="submit" class="btn btn-secondary">로그아웃</button>
 </form>
 
+<a href="/posts" class="btn btn-primary">게시글 목록</a>
+
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"/>
