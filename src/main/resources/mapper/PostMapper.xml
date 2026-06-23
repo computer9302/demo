@@ -23,4 +23,31 @@
         ORDER BY p.post_id DESC
         LIMIT #{size} OFFSET #{offset}
     </select>
+
+    <!-- 상세 조회 -->
+    <select id="findById" resultType="Post">
+        SELECT
+        FROM post p JOIN member m ON p.member_id = m.member_id
+        WHERE P.POST_ID = #{postId}
+    </select>
+
+    <!-- 등록 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="postId">
+        INSERT INTO post (member_id, title, content)
+        VALUES (#{memberId}, #{title}), #{content})
+    </insert>
+
+    <!-- 수정 -->
+    <update id="update">
+        UPDATE post
+        SET title = #{title},
+            content = #{content}
+        WHERE post_id = #{postId}
+    </update>
+
+    <!-- 삭제 -->
+    <delete id="delete">
+        DELETE FROM post
+        WHERE post_id = #{postId}
+    </delete>
 </mapper>

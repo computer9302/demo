@@ -15,5 +15,16 @@ public interface PostMapper {
     List<Post> findAllpaged(@Param("offset") int offset,
                             @Param("size") int size);
 
+    // 상세 조회
+    Post findById(@Param("postId") Long postId);
+
+    // 등록
+    void insert(Post post);
+
+    // 수정
+    void update(Post post);
+
+    // 삭제
+    void delete(@Param("postId") Long postId);
 
 }

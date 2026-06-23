@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -31,5 +34,79 @@ public class PostController {
         model.addAttribute("pageDto", pageDto);
         return "post/list";
     }
+
+    // 공통: 로그인 회원 가져오기 (private 메서드)
+    private Member getLoginMember(HttpSession session){
+        return (Member) session.getAttribute("loginMember");
+    }
+
+    // ==== 등록 ====
+    @GetMapping("/posts/new")
+    public String writeForm(HttpSession session){
+        if (getLoginMember(session) == null){
+            return "redirect:/login";
+        }
+        return "post/write";
+    }
+
+    @PostMapping("/posts")
+    public String create(@RequestParam String title,
+                         @RequestParam String content,
+                         HttpSession session){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect:/login";
+        }
+
+        postService.createPost(loginMember, title, content);
+        return "redirect:/posts";
+    }
+
+    // ==== 상세 ====
+    @GetMapping("/posts/{postId}")
+    public String detail(@PathVariable Long postId,
+                         HttpSession session,
+                         Model model){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect:/login";
+        }
+
+        Post post = postService.getPost(postId);
+        if (post == null){
+            return "redirect:/posts";
+        }
+
+        model.addAttribute("post", post);
+        model.addAttribute("loginMember", loginMember); // 수정/삭제 버튼 표시용
+        return "post/detail";
+    }
+
+    // ==== 수정 ====
+
+    public String editForm(@PathVariable Long postId,
+                           HttpSession session,
+                           Model model){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect:/posts";
+        }
+
+        Post post = postService.getPost(postId);
+        if (post == null){
+            return "redirect:/posts";
+        }
+
+        // 본인 글만 수정 폼 접근
+        if (!post.getMemberId().equals(loginMember.getMemberId())){
+            return "redirect:/posts/" + postId;
+        }
+
+        model.addAttribute("post", post);
+        return "post/edit";
+    }
+
+
+
 }
 
