@@ -83,7 +83,7 @@ public class PostController {
     }
 
     // ==== 수정 ====
-
+    @GetMapping("/posts/{postId}/edit")
     public String editForm(@PathVariable Long postId,
                            HttpSession session,
                            Model model){
@@ -106,6 +106,32 @@ public class PostController {
         return "post/edit";
     }
 
+    @PostMapping("/posts/{postId}/edit")
+    public String update(@PathVariable Long postId,
+                         @RequestParam String title,
+                         @RequestParam String content,
+                         HttpSession session){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect:/login";
+        }
+
+        postService.updatePost(postId, loginMember, title, content);
+        return "redirect:/posts/" + postId;
+    }
+
+    // ==== 삭제 ====
+    @PostMapping("/posts/{postId}/delete")
+    public String delete(@PathVariable Long postId,
+                         HttpSession session){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect:/login";
+        }
+
+        postService.deletePost(postId, loginMember);
+        return "redirect:/posts";
+    }
 
 
 }

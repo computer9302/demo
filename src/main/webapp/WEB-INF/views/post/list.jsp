@@ -5,6 +5,10 @@
 
 <h2>게시글 목록</h2>
 
+<div class="mb-3">
+    <a href="/posts/new" class="btn btn-primary">글쓰기</a>
+</div>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -18,7 +22,9 @@
     <c:forEach var="post" items="${pageDto.list}">
         <tr>
             <td>${post.postId}</td>
-            <td>${post.title}</td>
+            <td>
+            <a href="/posts/${post.postId}">${post.title}</a>
+            </td>
             <td>${post.writerName}</td>
             <td>${post.createdAt}</td>
         </tr>
