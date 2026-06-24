@@ -27,4 +27,12 @@ public interface PostMapper {
     // 삭제
     void delete(@Param("postId") Long postId);
 
+    int countBySearch(@Param("keyword") String keyword,
+                      @Param("type") String type);
+
+    List<Post> findBySearchPaged(@Param("offset") int offset,
+                                 @Param("size") int size,
+                                 @Param("keyword") String keyword,
+                                 @Param("type") String type);
+
 }

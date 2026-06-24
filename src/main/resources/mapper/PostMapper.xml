@@ -26,15 +26,15 @@
 
     <!-- 상세 조회 -->
     <select id="findById" resultType="Post">
-        SELECT
+        SELECT *
         FROM post p JOIN member m ON p.member_id = m.member_id
-        WHERE P.POST_ID = #{postId}
+        WHERE p.POST_ID = #{postId}
     </select>
 
     <!-- 등록 -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="postId">
         INSERT INTO post (member_id, title, content)
-        VALUES (#{memberId}, #{title}), #{content})
+        VALUES (#{memberId}, #{title}, #{content})
     </insert>
 
     <!-- 수정 -->
@@ -50,4 +50,41 @@
         DELETE FROM post
         WHERE post_id = #{postId}
     </delete>
+
+    <!-- 검색 조건 공통 (재사용) -->
+    <sql id="searchCondition">
+        <if test="keyword != null and keyword != ''">
+            <choose>
+                <when test="type == 'writer'">
+                    AND m.name LIKE CONCAT('%', #{KEYWORD}, '%')
+                </when>
+                <otherwise>
+                    AND p.title LIKE CONCAT('%', #{keyword}, '%')
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+
+    <select id="countBySearch" resultType="int">
+        SELECT COUNT(*)
+        FROM post p JOIN member m ON p.member_id = m.merber_id
+        WHERE 1=1
+        <include refid="searchCondition"/>
+    </select>
+
+    <select id="findBySearchPaged" resultType="post">
+        SELECT
+            p.post_id,
+            p.member_id,
+            p.title,
+            p.content,
+            p.created_at,
+            m.name AS writer_name
+        FROM post p JOIN member m ON p.member_id = m.member_id
+        WHERE 1=1
+        <include refid="searchCondition"/>
+        ORDER BY p.post_id DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
 </mapper>

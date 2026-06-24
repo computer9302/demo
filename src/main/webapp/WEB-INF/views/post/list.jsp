@@ -5,6 +5,22 @@
 
 <h2>게시글 목록</h2>
 
+<form method="get" action="/posts" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="type" class="form-select">
+            <option value="title" ${type == 'title' ? 'selected' : ''}>제목</option>
+            <option value="writer" ${type == 'writer' ? 'selected' : ''}>작성자</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <input type="text" name="keyword" class="form-control"
+               value="${keyword}" placeholder="검색어">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">검색</button>
+    </div>
+</form>
+
 <div class="mb-3">
     <a href="/posts/new" class="btn btn-primary">글쓰기</a>
 </div>
@@ -41,7 +57,7 @@
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item ${pageDto.hasPrev() ? '' : 'disabled'}">
-            <a class="page-link" href="/posts?page=${pageDto.prevPage()}">이전</a>
+            <a class="page-link" href="/posts?page=${pageDto.prevPage()}&type=keyword=${keyword}">이전</a>
         </li>
 
         <li class="page-item active">
@@ -51,7 +67,7 @@
         </li>
 
         <li class="page-item ${pageDto.hasNext() ? '' : disabled}">
-            <a class="page-link" href="/posts?page=${pageDto.nextPage()}">다음</a>
+            <a class="page-link" href="/posts?page=${pageDto.nextPage()}&type=${type}&keyword=${keyword}">다음</a>
         </li>
     </ul>
 </nav>

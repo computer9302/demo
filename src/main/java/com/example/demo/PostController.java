@@ -20,6 +20,8 @@ public class PostController {
 
     @GetMapping("/posts")
     public String list(@RequestParam(defaultValue = "1") int page,
+                       @RequestParam(defaultValue = "") String keyword,
+                       @RequestParam(defaultValue = "title") String type,
                        HttpSession session,
                        Model model){
 
@@ -29,9 +31,11 @@ public class PostController {
             return "redirect:/login";
         }
 
-        PageDto<Post> pageDto = postService.getPostList(page);
+        PageDto<Post> pageDto = postService.getPostList(page, keyword, type);
 
         model.addAttribute("pageDto", pageDto);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
         return "post/list";
     }
 

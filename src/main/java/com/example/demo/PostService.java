@@ -15,15 +15,15 @@ public class PostService {
         this.postMapper = postMapper;
     }
 
-    public PageDto<Post> getPostList(int page){
+    public PageDto<Post> getPostList(int page, String keyword, String type){
         if (page < 1){
             page=1;
         }
 
-        int totalCount = postMapper.countAll();
+        int totalCount = postMapper.countBySearch(keyword, type);
         int offset = (page - 1) * PAGE_SIZE;
 
-        List<Post> list = postMapper.findAllpaged(offset, PAGE_SIZE);
+        List<Post> list = postMapper.findBySearchPaged(offset, PAGE_SIZE, keyword, type);
 
         return new PageDto<>(list, page, PAGE_SIZE, totalCount);
     }
