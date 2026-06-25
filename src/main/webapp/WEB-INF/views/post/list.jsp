@@ -57,7 +57,7 @@
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item ${pageDto.hasPrev() ? '' : 'disabled'}">
-            <a class="page-link" href="/posts?page=${pageDto.prevPage()}&type=keyword=${keyword}">이전</a>
+            <a class="page-link" href="/posts?page=${pageDto.prevPage()}&type=${type}&keyword=${keyword}">이전</a>
         </li>
 
         <li class="page-item active">
