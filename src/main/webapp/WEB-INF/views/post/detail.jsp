@@ -22,6 +22,38 @@
 </form>
 </c:if>
 
+<hr>
+<h4>댓글</h4>
+
+<ul class="list-group mb-3">
+    <c:forEach var="comment" items="${comments}">
+        <li class="list-group-item d-flex justify-content-between">
+            <div>
+                <strong>${comment.writerName}</strong>
+        <span class="text-muted small ms-2">${comment.createdAt}</span>
+        <div>${comment.content}</div>
+        </div>
+        <c:if test="${comment.memberId == loginMember.memberId}">
+            <form method="post"
+                action="/posts/${post.postId}/comments/${comment.commentId}/delete">
+                <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+            </form>
+        </c:if>
+        </li>
+    </c:forEach>
+    <c:if test="${empty comments}">
+        <li class="list-group-item text-center text-muted">댓글이 없습니다.</li>
+    </c:if>
+</ul>
+
+<form method="post" action="/posts/${post.postId}/comments">
+    <div class="input-group">
+        <input type="text" name="content" class="form-control"
+            placeholder="댓글을 입력하세요" required>
+        <button type="submit" class="btn btn-primary">등록</button>
+    </div>
+</form>
+
 <a href="/posts" class="btn btn-secondary">목록</a>
 
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"/>

@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class PostController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, CommentService commentService) {
         this.postService = postService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/posts")
@@ -81,8 +85,11 @@ public class PostController {
             return "redirect:/posts";
         }
 
+        List<Comment> comments = commentService.getComments(postId);
+
         model.addAttribute("post", post);
         model.addAttribute("loginMember", loginMember); // 수정/삭제 버튼 표시용
+        model.addAttribute("comments", comments);
         return "post/detail";
     }
 
@@ -137,6 +144,30 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    @PostMapping("/posts/{postId}/comments")
+    public String addComment(@PathVariable Long postId,
+                             @RequestParam String content,
+                             HttpSession session){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect:/login";
+        }
 
+        commentService.addComment(postId, loginMember, content);
+        return "redirect:/posts/" + postId;
+    }
+
+    @PostMapping("/posts/{postId}/comments/{commentId}/delete")
+    public String deleteComment(@PathVariable Long postId,
+                                @PathVariable Long commentId,
+                                HttpSession session){
+        Member loginMember = getLoginMember(session);
+        if (loginMember == null){
+            return "redirect/login";
+        }
+
+        commentService.deleteComment(commentId, loginMember);
+        return "redirect:/posts/" + postId;
+    }
 }
 
