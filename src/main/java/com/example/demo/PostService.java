@@ -33,6 +33,13 @@ public class PostService {
     }
 
     public void createPost(Member loginMember, String title, String content){
+        if (title == null || title.isBlank()){
+            throw new IllegalArgumentException("제목을 입력하세요");
+        }
+        if (content == null || content.isBlank()){
+            throw new IllegalArgumentException("내용을 입력하세요.");
+        }
+
         Post post = new Post();
         post.setMemberId(loginMember.getMemberId());
         post.setTitle(title);

@@ -3,6 +3,10 @@
 
 <jsp:include page="/WEB-INF/views/layout/header.jsp"/>
 
+<c:if test="${not empty errorMsg}">
+    <div class="alert alert-danger">${errorMsg}</div>
+</c:if>
+
 <h2>게시글 목록</h2>
 
 <form method="get" action="/posts" class="row g-2 mb-3">
@@ -47,7 +51,7 @@
     </c:forEach>
     <c:if test="${empty pageDto.list}">
         <tr>
-            <td colspan="4" class="text-center">등록되 글이 없습니다.</td>
+            <td colspan="4" class="text-center">등록된 글이 없습니다.</td>
         </tr>
     </c:if>
     </tbody>
@@ -66,7 +70,7 @@
             </span>
         </li>
 
-        <li class="page-item ${pageDto.hasNext() ? '' : disabled}">
+        <li class="page-item ${pageDto.hasNext() ? '' : 'disabled'}">
             <a class="page-link" href="/posts?page=${pageDto.nextPage()}&type=${type}&keyword=${keyword}">다음</a>
         </li>
     </ul>

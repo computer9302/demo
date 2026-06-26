@@ -12,9 +12,9 @@
 <form method="post" action="/login">
     <div class="mb-3">
         <label class="form-label">아이디</label>
-        <input type="text" name="loginId" class="from-control" required>
+        <input type="text" name="loginId" class="form-control" required>
     </div>
-    <div class="mb3-3">
+    <div class="mb-3">
         <label class="form-label">비밀번호</label>
         <input type="password" name="password" class="form-control" required>
     </div>

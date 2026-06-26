@@ -26,9 +26,15 @@
 
     <!-- 상세 조회 -->
     <select id="findById" resultType="Post">
-        SELECT *
+        SELECT
+            p.post_id,
+            p.member_id,
+            p.title,
+            p.content,
+            p.created_at,
+            m.name AS writer_name
         FROM post p JOIN member m ON p.member_id = m.member_id
-        WHERE p.POST_ID = #{postId}
+        WHERE p.post_id = #{postId}
     </select>
 
     <!-- 등록 -->

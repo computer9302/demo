@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,7 +99,7 @@ public class PostController {
                            Model model){
         Member loginMember = getLoginMember(session);
         if (loginMember == null){
-            return "redirect:/posts";
+            return "redirect:/login";
         }
 
         Post post = postService.getPost(postId);

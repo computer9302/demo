@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,19 +43,23 @@ public class LoginController {
         }
 
         // 세션에 로그인 회원 저장 (비밀번호는 넣지 않기)
+        member.setPassword(null);
         session.setAttribute("loginMember", member);
         return "redirect:/main";
     }
 
     // 메인 (GET /main)
     @GetMapping("/main")
-    public String main(HttpSession session, Model model){
+    public String main(HttpSession session, Model model, HttpServletResponse response){
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         if (loginMember == null){
             return "redirect:/login"; // 비로그인 -> 로그인 페이지
         }
 
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
         model.addAttribute("loginMember", loginMember);
         return "main";
     }
