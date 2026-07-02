@@ -18,4 +18,15 @@
         FROM MEMBER
         WHERE LOGIN_ID = #{loginId}
     </select>
+
+    <select id="countByLoginId" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE login_id = #{loginId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO member (login_id, password, name)
+        VALUES (#{loginId}, #{password}, #{name})
+    </insert>
 </mapper>

@@ -19,6 +19,9 @@
         <input type="password" name="password" class="form-control" required>
     </div>
     <button type="submit" class="btn btn-primary">로그인</button>
+    <div class="mt-3">
+        <a href="/signup">회원가입</a>
+    </div>
 </form>
 
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"/>
