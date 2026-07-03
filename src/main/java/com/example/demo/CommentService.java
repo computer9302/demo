@@ -17,12 +17,19 @@ public class CommentService {
         return commentMapper.findByPostId(postId);
     }
 
-    public void addComment(Long postId, Member loginMember, String content){
+    public Comment addComment(Long postId, Member loginMember, String content){
+        if (content == null || content.isBlank()){
+            throw new IllegalArgumentException("댓글을 입력하세요.");
+        }
+
         Comment comment = new Comment();
         comment.setPostId(postId);
         comment.setMemberId(loginMember.getMemberId());
         comment.setContent(content);
         commentMapper.insert(comment);
+
+        comment.setWriterName(loginMember.getName());
+        return comment;
     }
 
     public void deleteComment(Long commentId, Member loginMember){

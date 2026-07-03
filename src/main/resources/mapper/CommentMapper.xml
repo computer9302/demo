@@ -17,7 +17,7 @@
         ORDER BY c.comment_id ASC
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="commentId">
         INSERT INTO comment (post_id, member_id, content)
         VALUES (#{postId}, #{memberId}, #{content})
     </insert>
