@@ -28,8 +28,9 @@ public class CommentService {
         comment.setContent(content);
         commentMapper.insert(comment);
 
-        comment.setWriterName(loginMember.getName());
-        return comment;
+        Comment saved = commentMapper.findById(comment.getCommentId());
+        saved.setWriterName(loginMember.getName());
+        return saved;
     }
 
     public void deleteComment(Long commentId, Member loginMember){

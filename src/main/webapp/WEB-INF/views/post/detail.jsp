@@ -114,6 +114,8 @@
 
         if (!confirm('댓글을 삭제하시겠습니까?')) return;
 
+        const commentId = e.target.getAttribute('data-comment-id');
+
         fetch('/api/posts/' + postId + '/comments/' + commentId,{
             method: 'DELETE'
         })
