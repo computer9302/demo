@@ -12,6 +12,6 @@ public interface MemberMapper {
     // 아디디 존재 여부(1이면 중복)
     int countByLoginId(@Param("loginId") String loginId);
 
-    // 회원 등록
+    // 회원 등록d
     void insert(Member member);
 }
