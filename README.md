@@ -33,6 +33,8 @@ Spring Boot + MyBatis + JSP 기반 게시판 프로젝트입니다.
 - 검색 결과
   <img width="1009" height="577" alt="image" src="https://github.com/user-attachments/assets/381a6be8-1559-4784-b1fe-021a49166e2a" />
 
+## ERD
+<img width="815" height="415" alt="image" src="https://github.com/user-attachments/assets/dbde0f54-a8f3-416c-b585-8bb77c0b2fb5" />
 
 
 
