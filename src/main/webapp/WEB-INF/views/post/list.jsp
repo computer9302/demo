@@ -7,7 +7,12 @@
     <div class="alert alert-danger">${errorMsg}</div>
 </c:if>
 
-<h2>게시글 목록</h2>
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>게시글 목록</h2>
+    <a href="/posts/new" class="btn btn-primary">글쓰기</a>
+</div>
 
 <form method="get" action="/posts" class="row g-2 mb-3">
     <div class="col-auto">
@@ -25,11 +30,7 @@
     </div>
 </form>
 
-<div class="mb-3">
-    <a href="/posts/new" class="btn btn-primary">글쓰기</a>
-</div>
-
-<table class="table table-striped">
+<table class="table table-striped table-hover align-middle">
     <thead>
     <tr>
         <th style="width:10%">번호</th>
@@ -58,6 +59,8 @@
 </table>
 
 <!-- 페이징 버튼 -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <a href="/main" class="btn btn-secondary btn-sm">메인으로</a>
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item ${pageDto.hasPrev() ? '' : 'disabled'}">
@@ -75,7 +78,7 @@
         </li>
     </ul>
 </nav>
-
-<a href="/main" class="btn btn-secondary">메인으로</a>
+    <span class="text-muted small">${pageDto.page} / ${pageDto.totalPages} 페이지</span>
+</div>
 
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"/>

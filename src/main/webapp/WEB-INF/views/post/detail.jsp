@@ -3,26 +3,30 @@
 
 <jsp:include page="/WEB-INF/views/layout/header.jsp"/>
 
-<h2>${post.title}</h2>
-
-<div class="mb-3 text-muted">
-    작성자: ${post.writerName} |
-    작성일: ${post.createdAt}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between">
+        <h4 class="mb-0">${post.title}</h4>
+        <small class="text-muted">${post.createdAt}</small>
+    </div>
+<div class="card-body">
+    <p class="text-muted mb-3">작성자: ${post.writerName}</p>
+    <div style="white-space: pre-wrap;">${post.content}</div>
 </div>
 
-<div class="mb-4" style="white-space: pre-wrap;">${post.content}</div>
+    <div class="card-footer">
+        <!-- 본인 글일 때만 수정/삭제 -->
+        <c:if test="${post.memberId == loginMember.memberId}">
+            <a href="/posts/${post.postId}/edit" class="btn btn-warning">수정</a>
 
-<!-- 본인 글일 때만 수정/삭제 -->
-<c:if test="${post.memberId == loginMember.memberId}">
-    <a href="/posts/${post.postId}/edit" class="btn btn-warning">수정</a>
+            <button type="button" id="btnDeletePost" class="btn btn-danger">삭제</button>
+        </c:if>
+    </div>
 
-    <button type="button" id="btnDeletePost" class="btn btn-danger">삭제</button>
-</c:if>
+</div>
 
 <hr>
-<h4>댓글</h4>
-
-<ul class="list-group mb-3" id="commentList">
+<h5 class="mb-3">댓글</h5>
+<ul class="list-group list-gruop-flush mb-3" id="commentList">
     <c:forEach var="comment" items="${comments}">
         <li class="list-group-item d-flex justify-content-between">
             <div>
